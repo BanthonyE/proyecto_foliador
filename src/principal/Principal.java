@@ -533,7 +533,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_unoMousePressed
 
     private void tresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tresActionPerformed
-        new CambiaPanel(pnlPrincipal, new paneles.PNL_PERSONALIZACION());
+        new CambiaPanel(pnlPrincipal, new paneles.PNL_Personalizacion());
         if(this.tres.isSelected()){
             this.tres.setColorNormal(new Color(204,204,204));
             this.tres.setColorHover(new Color(204,204,204));
