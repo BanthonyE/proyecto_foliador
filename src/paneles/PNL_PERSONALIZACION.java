@@ -9,12 +9,12 @@ package paneles;
  *
  * @author RojeruSan
  */
-public class pnlChat extends javax.swing.JPanel {
+public class PNL_PERSONALIZACION extends javax.swing.JPanel {
 
     /**
      * Creates new form pnlHome
      */
-    public pnlChat() {
+    public PNL_PERSONALIZACION() {
         initComponents();
     }
 
@@ -45,7 +45,7 @@ public class pnlChat extends javax.swing.JPanel {
         jLabel7.setForeground(new java.awt.Color(128, 128, 131));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img1/chat.png"))); // NOI18N
-        jLabel7.setText("Personalización");
+        jLabel7.setText("Persona");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
