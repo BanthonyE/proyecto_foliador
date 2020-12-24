@@ -389,7 +389,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("FOLIANDO.COM");
+        jLabel2.setText("FOLIANDO.COM.PE");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -400,7 +400,7 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jButton1)
                 .addGap(312, 312, 312)
                 .addComponent(jLabel2)
-                .addContainerGap(313, Short.MAX_VALUE))
+                .addContainerGap(256, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
