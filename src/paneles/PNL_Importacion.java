@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import mivisorpdf.CuadroImagen;
-import mivisorpdf.MiVisorPDF;
+import paneles.CuadroImagen;
+import paneles.MiVisorPDF;
 /**
  *
  * @author RojeruSan

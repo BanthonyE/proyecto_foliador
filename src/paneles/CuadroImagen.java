@@ -1,4 +1,4 @@
-package mivisorpdf;
+package paneles;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
