@@ -5,14 +5,34 @@
  */
 package paneles;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Label;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
 
 
+import java.util.Iterator;
+import static javafx.scene.transform.Transform.scale;
+import static javax.swing.Spring.scale;
+import org.apache.pdfbox.exceptions.COSVisitorException;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDResources;
+import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.graphics.xobject.PDPixelMap;
+import org.apache.pdfbox.pdmodel.graphics.xobject.PDXObjectImage;
 /**
  *
  * @author RojeruSan
@@ -20,6 +40,7 @@ import javax.swing.JTextField;
 public class PNL_Personalizacion extends javax.swing.JPanel {
 
     private List<JTextField> lista_nombre_seccion, lista_rango_inferior_seccion, lista_rango_superior_seccion;
+    String ruta_pdf;
     
     public PNL_Personalizacion() {
         initComponents();        
@@ -46,10 +67,12 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel6 = new javax.swing.JPanel();
-        Panel_rango_superior_seccion = new javax.swing.JPanel();
-        Panel_rango_inferior_seccion = new javax.swing.JPanel();
         Panel_nom_seccion = new javax.swing.JPanel();
+        Panel_rango_inferior_seccion = new javax.swing.JPanel();
+        Panel_rango_superior_seccion = new javax.swing.JPanel();
         btn_generar_secciones = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -86,14 +109,14 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
                 .addContainerGap(65, Short.MAX_VALUE))
         );
 
-        Panel_rango_superior_seccion.setLayout(new java.awt.GridLayout(10, 0));
-        jPanel6.add(Panel_rango_superior_seccion);
+        Panel_nom_seccion.setLayout(new java.awt.GridLayout(10, 0));
+        jPanel6.add(Panel_nom_seccion);
 
         Panel_rango_inferior_seccion.setLayout(new java.awt.GridLayout(10, 0));
         jPanel6.add(Panel_rango_inferior_seccion);
 
-        Panel_nom_seccion.setLayout(new java.awt.GridLayout(10, 0));
-        jPanel6.add(Panel_nom_seccion);
+        Panel_rango_superior_seccion.setLayout(new java.awt.GridLayout(10, 0));
+        jPanel6.add(Panel_rango_superior_seccion);
 
         jScrollPane2.setViewportView(jPanel6);
 
@@ -123,6 +146,34 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 222, Short.MAX_VALUE)
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 194, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(153, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -131,6 +182,7 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,7 +190,9 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(541, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(134, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -179,9 +233,12 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
 
     private void btnSeccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeccionActionPerformed
         int numSecciones = 0;        
+        
         Panel_nom_seccion.removeAll();
         Panel_rango_superior_seccion.removeAll();
         Panel_rango_inferior_seccion.removeAll();
+        
+        lista_nombre_seccion.clear();
         
         numSecciones = Integer.parseInt(txtnum_secciones.getText());
         
@@ -189,33 +246,34 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
             
             if(i == 0){
                 Label lbl_nomb_seccion = new Label("Nombre de la Sección");
-                Label lbl_rango_superior_seccion = new Label("De la página");
-                Label lbl_rango_inferior_seccion = new Label("Hasta la página");
+                Label lbl_rango_inferior_seccion = new Label("De");
+                Label lbl_rango_superior_seccion = new Label("Hasta");
                 
                 Panel_nom_seccion.add(lbl_nomb_seccion);                
                 Panel_nom_seccion.updateUI();
-
-                Panel_rango_superior_seccion.add(lbl_rango_superior_seccion);
-                Panel_rango_superior_seccion.updateUI();
-
+                
                 Panel_rango_inferior_seccion.add(lbl_rango_inferior_seccion);
-                Panel_rango_inferior_seccion.updateUI();
+                Panel_rango_inferior_seccion.updateUI();      
+                
+                Panel_rango_superior_seccion.add(lbl_rango_superior_seccion);
+                Panel_rango_superior_seccion.updateUI();        
+             
             }else{
-                JTextField nombre_seccion = new JTextField("",20);
-                JTextField rango_inferior_seccion = new JTextField("",4);
-                JTextField rango_superior_seccion = new JTextField("",4);
-
+                JTextField nombre_seccion = new JTextField("",10);
+                JTextField rango_inferior_seccion = new JTextField("",5);
+                JTextField rango_superior_seccion = new JTextField("",5);
+  
                 Panel_nom_seccion.add(nombre_seccion);
                 lista_nombre_seccion.add(nombre_seccion);
-                Panel_nom_seccion.updateUI();
+                Panel_nom_seccion.updateUI();                   
+                
+                Panel_rango_inferior_seccion.add(rango_inferior_seccion);
+                lista_rango_inferior_seccion.add(rango_inferior_seccion);
+                Panel_rango_inferior_seccion.updateUI(); 
 
                 Panel_rango_superior_seccion.add(rango_superior_seccion);
                 lista_rango_superior_seccion.add(rango_superior_seccion);
                 Panel_rango_superior_seccion.updateUI();
-
-                Panel_rango_inferior_seccion.add(rango_inferior_seccion);
-                lista_rango_inferior_seccion.add(rango_inferior_seccion);
-                Panel_rango_inferior_seccion.updateUI();                
             }            
         }
         txtnum_secciones.setText("");
@@ -223,17 +281,76 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
     }//GEN-LAST:event_btnSeccionActionPerformed
 
     private void btn_generar_seccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_generar_seccionesActionPerformed
-        for(JTextField txt : lista_nombre_seccion){
-            System.out.println(txt.getText());
+               
+        String pdfFilePath = "C:/Users/encis/OneDrive/Escritorio/Documentos/pdf/instrucciones.pdf";         
+
+        PDDocument document = null; 
+        try {
+            document = PDDocument.load(pdfFilePath);
+        } catch (IOException ex) {
+            Logger.getLogger(PNL_Personalizacion.class.getName()).log(Level.SEVERE, null, ex);
         }
-        for(JTextField txt2 : lista_rango_superior_seccion){
-            System.out.println(txt2.getText());
+
+        try {
+            addImageToPage(document, lista_nombre_seccion, lista_rango_inferior_seccion, lista_rango_superior_seccion);
+        } catch (IOException ex) {
+            Logger.getLogger(PNL_Personalizacion.class.getName()).log(Level.SEVERE, null, ex);
         }
-        for(JTextField txt3 : lista_rango_inferior_seccion){
-            System.out.println(txt3.getText());
+
+        try {         
+            document.save("C:/Users/encis/OneDrive/Escritorio/Documentos/pdf/prueba-marca-de-agua.pdf");
+        } catch (IOException ex) {
+            Logger.getLogger(PNL_Personalizacion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (COSVisitorException ex) {
+            Logger.getLogger(PNL_Personalizacion.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }//GEN-LAST:event_btn_generar_seccionesActionPerformed
 
+    public static void addImageToPage(PDDocument document, List<JTextField> lista_nombre_seccion, List<JTextField> lista_rango_inferior_seccion, List<JTextField> lista_rango_superior_seccion) throws IOException { 
+        int cantidad_secciones = lista_nombre_seccion.size();
+        BufferedImage image = null; 
+        int pdfpage=0;
+        for (int i = 0; i < cantidad_secciones; i++) {
+            String nomb_seccion = lista_nombre_seccion.get(i).getText();
+            int inicio_pagina = Integer.parseInt(lista_rango_inferior_seccion.get(i).getText());
+            int final_pagina = Integer.parseInt(lista_rango_superior_seccion.get(i).getText()); 
+                        
+            int cont=1;            
+            int cantidad_paginas = final_pagina - inicio_pagina + 1;   
+            
+            for (int j = inicio_pagina; j <= final_pagina; j++) {   
+                try {
+                    image = ImageIO.read(new File( "C:/Users/encis/OneDrive/Escritorio/Documentos/imágenes/simbolo.jpeg"));              
+                    Graphics g = image.getGraphics(); 
+                    Font myFont = new Font ("Courier New", 1, 55);
+                    g.setFont(myFont); 
+                    g.setColor(Color.BLACK);
+                    g.drawString(nomb_seccion, 70, 130); 
+                    g.drawString(""+cont, 90, 270); 
+                    g.drawString(""+cantidad_paginas, 230, 270); 
+                    g.dispose(); 
+                    cont++;    
+                                        
+                    BufferedImage tmp_image = image;
+                    BufferedImage image2 = new BufferedImage(tmp_image.getWidth(), tmp_image.getHeight(), BufferedImage.TYPE_4BYTE_ABGR);   
+                    image2.createGraphics().drawRenderedImage(tmp_image, null); 
+                    
+                    PDXObjectImage ximage = new PDPixelMap(document, image2); 
+                    PDPage page = (PDPage)document.getDocumentCatalog().getAllPages().get(pdfpage); 
+                    
+                    PDPageContentStream contentStream = new PDPageContentStream(document, page, true, true); 
+                    contentStream.drawXObject(ximage, 0, 600, ximage.getWidth()*0.5f, ximage.getHeight()*0.5f); 
+                    contentStream.close(); 
+                    
+                    pdfpage++;
+                } catch (IOException ex) {
+                    Logger.getLogger(PNL_Personalizacion.class.getName()).log(Level.SEVERE, null, ex);
+                } 
+            }
+        }
+            
+    }       
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Panel_nom_seccion;
@@ -246,7 +363,9 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField txtnum_secciones;
     // End of variables declaration//GEN-END:variables
