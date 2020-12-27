@@ -42,6 +42,7 @@ public class PNL_Importacion extends javax.swing.JPanel {
 
         btnabrir.setBackground(new java.awt.Color(255, 255, 255));
         btnabrir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnabrir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/pdf.png"))); // NOI18N
         btnabrir.setText("Abrir archivo PDF");
         btnabrir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
