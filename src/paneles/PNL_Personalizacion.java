@@ -299,7 +299,7 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
         }
 
         try {         
-            document.save("src/Recursos/prueba-marca-de-agua.pdf");
+            document.save("src/Recursos/pdfGenerado/prueba-marca-de-agua.pdf");
         } catch (IOException ex) {
             Logger.getLogger(PNL_Personalizacion.class.getName()).log(Level.SEVERE, null, ex);
         } catch (COSVisitorException ex) {
@@ -322,7 +322,7 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
             
             for (int j = inicio_pagina; j <= final_pagina; j++) {   
                 try {
-                    image = ImageIO.read(new File( "C:/Users/encis/OneDrive/Escritorio/Documentos/imágenes/simbolo.jpeg"));              
+                    image = ImageIO.read(new File( "src/Recursos/sellos/sello.jpeg"));              
                     Graphics g = image.getGraphics(); 
                     Font myFont = new Font ("Courier New", 1, 55);
                     g.setFont(myFont); 
