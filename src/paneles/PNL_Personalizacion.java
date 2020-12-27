@@ -80,7 +80,7 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
         jLabel7.setFont(new java.awt.Font("Roboto", 1, 48)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(128, 128, 131));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img1/chat.png"))); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/img/chat.png"))); // NOI18N
         jLabel7.setText("Personalización");
 
         btnSeccion.setText("Crear Secciones");

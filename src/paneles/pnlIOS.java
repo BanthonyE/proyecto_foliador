@@ -39,12 +39,12 @@ public class pnlIOS extends javax.swing.JPanel {
         jLabel5.setText("HECHO EN JAVA - UNFV");
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Duo.jpg"))); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/img/Duo.jpg"))); // NOI18N
 
         jLabel7.setFont(new java.awt.Font("Roboto", 1, 48)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(128, 128, 131));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img1/ios.png"))); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/img/ios.png"))); // NOI18N
         jLabel7.setText("IOS");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
