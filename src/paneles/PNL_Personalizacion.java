@@ -40,13 +40,14 @@ import org.apache.pdfbox.pdmodel.graphics.xobject.PDXObjectImage;
 public class PNL_Personalizacion extends javax.swing.JPanel {
 
     private List<JTextField> lista_nombre_seccion, lista_rango_inferior_seccion, lista_rango_superior_seccion;
-    String ruta_pdf;
+    public static String rutaPdf;
     
     public PNL_Personalizacion() {
         initComponents();        
         lista_nombre_seccion = new ArrayList<>();
         lista_rango_inferior_seccion = new ArrayList<>();
         lista_rango_superior_seccion = new ArrayList<>();
+        rutaPdf = PNL_Importacion.rutaPdf;
     }
 
     /**
@@ -282,7 +283,7 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
 
     private void btn_generar_seccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_generar_seccionesActionPerformed
                
-        String pdfFilePath = "C:/Users/encis/OneDrive/Escritorio/Documentos/pdf/instrucciones.pdf";         
+        String pdfFilePath = rutaPdf;         
 
         PDDocument document = null; 
         try {
@@ -298,7 +299,7 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
         }
 
         try {         
-            document.save("C:/Users/encis/OneDrive/Escritorio/Documentos/pdf/prueba-marca-de-agua.pdf");
+            document.save("src/Recursos/prueba-marca-de-agua.pdf");
         } catch (IOException ex) {
             Logger.getLogger(PNL_Personalizacion.class.getName()).log(Level.SEVERE, null, ex);
         } catch (COSVisitorException ex) {
