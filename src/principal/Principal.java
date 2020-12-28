@@ -13,6 +13,8 @@ import java.util.logging.Logger;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import paneles.CambiaPanel;
+import paneles.PNL_Importacion;
+import static paneles.PNL_Personalizacion.rutaPdf;
 
 /**
  *
@@ -21,6 +23,7 @@ import paneles.CambiaPanel;
 public class Principal extends javax.swing.JFrame {
 
     int x, y;
+    public static String rutaPdf;
     /**
      * Creates new form Principal
      */
@@ -30,7 +33,17 @@ public class Principal extends javax.swing.JFrame {
         this.setExtendedState(MAXIMIZED_BOTH);
         this.setLocationRelativeTo(this);
         this.uno.setSelected(true);
-        
+        rutaPdf = PNL_Importacion.rutaPdf;
+        if(rutaPdf==""){
+            tres.setEnabled(false);
+            cuatro.setEnabled(false);
+            cinco.setEnabled(false);
+        }else{
+            tres.setEnabled(true);
+            cuatro.setEnabled(true);
+            cinco.setEnabled(true);
+        }
+        System.out.println(rutaPdf);
         new CambiaPanel(pnlPrincipal, new paneles.pnlHome());
     }
 
@@ -572,8 +585,8 @@ public class Principal extends javax.swing.JFrame {
             this.tres.setColorPressed(new Color(204,204,204));
         }
     }//GEN-LAST:event_tresActionPerformed
-
-    private void tresMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tresMousePressed
+    
+    public void fondo_tres(){
         this.uno.setSelected(false);
         this.dos.setSelected(false);
         this.tres.setSelected(true);
@@ -582,6 +595,11 @@ public class Principal extends javax.swing.JFrame {
         this.seis.setSelected(false);
         this.siete.setSelected(false);
         this.ocho.setSelected(false);
+    }
+    
+    
+    private void tresMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tresMousePressed
+        fondo_tres();
     }//GEN-LAST:event_tresMousePressed
 
     private void dosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dosMousePressed
