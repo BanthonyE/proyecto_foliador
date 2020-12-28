@@ -11,6 +11,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import org.icepdf.ri.common.ComponentKeyBinding;
 import org.icepdf.ri.common.SwingController;
 import org.icepdf.ri.common.SwingViewBuilder;
+import principal.Principal;
 
 public class PNL_Importacion extends javax.swing.JPanel {
 
@@ -93,7 +94,7 @@ public class PNL_Importacion extends javax.swing.JPanel {
     
     private void btnabrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnabrirActionPerformed
         abrirPdf();
-
+       
     }//GEN-LAST:event_btnabrirActionPerformed
 
     public void abrirPdf(){
