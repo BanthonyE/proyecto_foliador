@@ -51,8 +51,12 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
     private List<JTextField> lista_nombre_seccion, lista_rango_inferior_seccion, lista_rango_superior_seccion;
     public static String rutaPdf;
     public String ruta_archivo;
+
+    SwingController control = null;
+    SwingViewBuilder factry = null;
+    JPanel veiwerCompntpnl = null;      
     
-    public int x_sello = 545, y_sello = 760;
+    public int x_sello = 550, y_sello = 755;
 
     public PNL_Personalizacion() {
         initComponents();        
@@ -384,7 +388,7 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_generar_seccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_generar_seccionesActionPerformed
-
+                  
         String pdfFilePath = rutaPdf;
 
         PDDocument document = null;
@@ -401,27 +405,23 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
         }
 
         try {
-            document.save("src/Recursos/pdfGenerado/prueba-marca-de-agua.pdf");
-        try {
-           SwingController control=new SwingController();
-            SwingViewBuilder factry=new SwingViewBuilder(control);
-            JPanel veiwerCompntpnl=factry.buildViewerPanel();
-            ComponentKeyBinding.install(control, veiwerCompntpnl);
-            control.getDocumentViewController().setAnnotationCallback(
-                    new org.icepdf.ri.common.MyAnnotationCallback(
-                    control.getDocumentViewController()));
-                   control.openDocument("src/Recursos/pdfGenerado/prueba-marca-de-agua.pdf");
-            sc.setViewportView(veiwerCompntpnl); 
-            
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this,"Cannot Load Pdf");
-        }
-            btn_generar_secciones.setEnabled(false);
+            document.save("src/Recursos/pdfGenerado/pdf-generado.pdf");
         } catch (IOException ex) {
             Logger.getLogger(PNL_Personalizacion.class.getName()).log(Level.SEVERE, null, ex);
         } catch (COSVisitorException ex) {
             Logger.getLogger(PNL_Personalizacion.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+            control=new SwingController();
+            factry=new SwingViewBuilder(control);
+            veiwerCompntpnl=factry.buildViewerPanel();
+            ComponentKeyBinding.install(control, veiwerCompntpnl);
+            control.getDocumentViewController().setAnnotationCallback(
+                new org.icepdf.ri.common.MyAnnotationCallback(
+                control.getDocumentViewController()));
+                control.openDocument("src/Recursos/pdfGenerado/pdf-generado.pdf");
+            sc.setViewportView(veiwerCompntpnl); 
+
         
     }//GEN-LAST:event_btn_generar_seccionesActionPerformed
 
@@ -433,6 +433,8 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
         Panel_rango_inferior_seccion.removeAll();
 
         lista_nombre_seccion.clear();
+        lista_rango_inferior_seccion.clear();
+        lista_rango_superior_seccion.clear();
 
         numSecciones = Integer.parseInt(txtnum_secciones.getText());
 
@@ -483,38 +485,9 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
         else{
            JOptionPane.showMessageDialog(this,"Falta ingresar datos en seccion");
         }
-        
-        
+        sc.setViewportView(null);
     }//GEN-LAST:event_btnGuardarCambiosActionPerformed
- public void abrir_pdf(String url) {       
-        rutaPdf = url;
-        try {
-           SwingController control=new SwingController();
-            SwingViewBuilder factry=new SwingViewBuilder(control);
-            JPanel veiwerCompntpnl=factry.buildViewerPanel();
-            ComponentKeyBinding.install(control, veiwerCompntpnl);
-            control.getDocumentViewController().setAnnotationCallback(
-                    new org.icepdf.ri.common.MyAnnotationCallback(
-                    control.getDocumentViewController()));
-                   control.openDocument(url);
-            sc.setViewportView(veiwerCompntpnl); 
-        } catch (Exception ex) {
-           JOptionPane.showMessageDialog(this,"Cannot Load Pdf");
-        }
-    }
-    public void abrirPdf(){
-        
-        JFileChooser j = new JFileChooser(ruta_archivo);
-        FileNameExtensionFilter fi = new FileNameExtensionFilter("pdf", "pdf");
-        j.setFileFilter(fi);
-        int se = j.showOpenDialog(this);
-        if (se == 0) {
-            ruta_archivo = j.getSelectedFile().getAbsolutePath();
-            abrir_pdf(ruta_archivo);
-        } else {
-            JOptionPane.showMessageDialog(null, "No selecciono");
-        }
-    }
+
     private void cbPosicionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbPosicionActionPerformed
         // Elegir posición del icono del PDF
         int opcion=cbPosicion.getSelectedIndex();
@@ -582,7 +555,7 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
                 btnOption06.setEnabled(false);
                 btnOption06.setColorHover(Color.getColor("0,0,0"));
                 btnOption06.setColorNormal(new Color(0,139,139));
-                x_sello = 450;
+                x_sello = 530;
                 y_sello = 755;                 
                 break;
             case 3:
@@ -648,17 +621,23 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
                 btnOption05.setEnabled(false);
                 btnOption05.setColorNormal(new Color(0,139,139));
                 btnOption05.setColorHover(Color.getColor("0,0,0"));
-                x_sello = 450;
+                x_sello = 530;
                 y_sello = 5;                
                 break; 
         }
         
     }//GEN-LAST:event_cbPosicionActionPerformed
 
-    public static void addImageToPage(PDDocument document, List<JTextField> lista_nombre_seccion, List<JTextField> lista_rango_inferior_seccion, List<JTextField> lista_rango_superior_seccion) throws IOException { 
+    public void addImageToPage(PDDocument document, List<JTextField> lista_nombre_seccion, List<JTextField> lista_rango_inferior_seccion, List<JTextField> lista_rango_superior_seccion) throws IOException { 
         int cantidad_secciones = lista_nombre_seccion.size();
-        BufferedImage image = null; 
+        BufferedImage image = null, tmp_image = null, image2 = null;
+        PDXObjectImage ximage = null;
+        PDPageContentStream contentStream = null;
+        PDPage page = null;
+        Graphics g = null;
+        
         int pdfpage=0;
+        
         for (int i = 0; i < cantidad_secciones; i++) {
             String nomb_seccion = lista_nombre_seccion.get(i).getText();
             int inicio_pagina = Integer.parseInt(lista_rango_inferior_seccion.get(i).getText());
@@ -670,7 +649,7 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
             for (int j = inicio_pagina; j <= final_pagina; j++) {   
                 try {
                     image = ImageIO.read(new File( "src/Recursos/sellos/sello.jpeg"));              
-                    Graphics g = image.getGraphics(); 
+                    g = image.getGraphics(); 
                     Font myFont = new Font ("Courier New", 1, 55);
                     g.setFont(myFont); 
                     g.setColor(Color.BLACK);
@@ -680,15 +659,15 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
                     g.dispose(); 
                     cont++;    
                                         
-                    BufferedImage tmp_image = image;
-                    BufferedImage image2 = new BufferedImage(tmp_image.getWidth(), tmp_image.getHeight(), BufferedImage.TYPE_4BYTE_ABGR);   
+                    tmp_image = image;
+                    image2 = new BufferedImage(tmp_image.getWidth(), tmp_image.getHeight(), BufferedImage.TYPE_4BYTE_ABGR);   
                     image2.createGraphics().drawRenderedImage(tmp_image, null); 
                     
-                    PDXObjectImage ximage = new PDPixelMap(document, image2); 
-                    PDPage page = (PDPage)document.getDocumentCatalog().getAllPages().get(pdfpage); 
+                    ximage = new PDPixelMap(document, image2); 
+                    page = (PDPage)document.getDocumentCatalog().getAllPages().get(pdfpage); 
                     
-                    PDPageContentStream contentStream = new PDPageContentStream(document, page, true, true); 
-                    contentStream.drawXObject(ximage, 0, 600, ximage.getWidth()*0.5f, ximage.getHeight()*0.5f); 
+                    contentStream = new PDPageContentStream(document, page, true, true); 
+                    contentStream.drawXObject(ximage, x_sello, y_sello, ximage.getWidth()*0.15f, ximage.getHeight()*0.15f); 
                     contentStream.close(); 
                     
                     pdfpage++;
