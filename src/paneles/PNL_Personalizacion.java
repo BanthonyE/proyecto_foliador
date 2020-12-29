@@ -52,6 +52,8 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
     public static String rutaPdf;
     public String ruta_archivo;
     
+    public int x_sello = 545, y_sello = 760;
+
     public PNL_Personalizacion() {
         initComponents();        
         lista_nombre_seccion = new ArrayList<>();
@@ -94,7 +96,6 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
         Panel_rango_superior_seccion = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         sc = new javax.swing.JScrollPane();
-        btnabrir = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         btn_generar_secciones = new javax.swing.JButton();
         btnGuardarCambios = new javax.swing.JButton();
@@ -258,17 +259,6 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
 
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Visualizar PDF"));
 
-        btnabrir.setBackground(new java.awt.Color(255, 255, 255));
-        btnabrir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnabrir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/pdf.png"))); // NOI18N
-        btnabrir.setText("Abrir archivo PDF");
-        btnabrir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnabrirActionPerformed(evt);
-            }
-        });
-        sc.setViewportView(btnabrir);
-
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -412,6 +402,20 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
 
         try {
             document.save("src/Recursos/pdfGenerado/prueba-marca-de-agua.pdf");
+        try {
+           SwingController control=new SwingController();
+            SwingViewBuilder factry=new SwingViewBuilder(control);
+            JPanel veiwerCompntpnl=factry.buildViewerPanel();
+            ComponentKeyBinding.install(control, veiwerCompntpnl);
+            control.getDocumentViewController().setAnnotationCallback(
+                    new org.icepdf.ri.common.MyAnnotationCallback(
+                    control.getDocumentViewController()));
+                   control.openDocument("src/Recursos/pdfGenerado/prueba-marca-de-agua.pdf");
+            sc.setViewportView(veiwerCompntpnl); 
+            
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,"Cannot Load Pdf");
+        }
             btn_generar_secciones.setEnabled(false);
         } catch (IOException ex) {
             Logger.getLogger(PNL_Personalizacion.class.getName()).log(Level.SEVERE, null, ex);
@@ -511,10 +515,6 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "No selecciono");
         }
     }
-    private void btnabrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnabrirActionPerformed
-        abrirPdf();
-    }//GEN-LAST:event_btnabrirActionPerformed
-
     private void cbPosicionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbPosicionActionPerformed
         // Elegir posición del icono del PDF
         int opcion=cbPosicion.getSelectedIndex();
@@ -538,6 +538,8 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
                 btnOption06.setEnabled(false);
                 btnOption06.setColorNormal(new Color(0,139,139));
                 btnOption06.setColorHover(Color.getColor("0,0,0"));
+                x_sello = 5;
+                y_sello = 755;                
                 break;
             case 1:
                 btnOption02.setEnabled(true);
@@ -558,6 +560,8 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
                 btnOption06.setEnabled(false);
                 btnOption06.setColorNormal(new Color(0,139,139));
                 btnOption06.setColorHover(Color.getColor("0,0,0"));
+                x_sello = 250;
+                y_sello = 755;                 
                 break;
             case 2:
                 btnOption03.setEnabled(true);
@@ -578,6 +582,8 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
                 btnOption06.setEnabled(false);
                 btnOption06.setColorHover(Color.getColor("0,0,0"));
                 btnOption06.setColorNormal(new Color(0,139,139));
+                x_sello = 450;
+                y_sello = 755;                 
                 break;
             case 3:
                 btnOption04.setEnabled(true);
@@ -598,6 +604,8 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
                 btnOption06.setEnabled(false);
                 btnOption06.setColorHover(Color.getColor("0,0,0"));
                 btnOption06.setColorNormal(new Color(0,139,139));
+                x_sello = 5;
+                y_sello = 5;                 
                 break;
             case 4:
                 btnOption05.setEnabled(true);
@@ -618,6 +626,8 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
                 btnOption06.setEnabled(false);
                 btnOption06.setColorHover(Color.getColor("0,0,0"));
                 btnOption06.setColorNormal(new Color(0,139,139));
+                x_sello = 250;
+                y_sello = 5;                
                 break;
             case 5:
                 btnOption06.setEnabled(true);
@@ -638,6 +648,8 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
                 btnOption05.setEnabled(false);
                 btnOption05.setColorNormal(new Color(0,139,139));
                 btnOption05.setColorHover(Color.getColor("0,0,0"));
+                x_sello = 450;
+                y_sello = 5;                
                 break; 
         }
         
@@ -701,7 +713,6 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
     private rsbuttom.RSButtonMetro btnOption06;
     private javax.swing.JButton btnSeccion;
     private javax.swing.JButton btn_generar_secciones;
-    private javax.swing.JButton btnabrir;
     private javax.swing.JComboBox<String> cbPosicion;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
