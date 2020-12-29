@@ -33,17 +33,7 @@ public class Principal extends javax.swing.JFrame {
         this.setExtendedState(MAXIMIZED_BOTH);
         this.setLocationRelativeTo(this);
         this.uno.setSelected(true);
-        rutaPdf = PNL_Importacion.rutaPdf;
-        if(rutaPdf==""){
-            tres.setEnabled(false);
-            cuatro.setEnabled(false);
-            cinco.setEnabled(false);
-        }else{
-            tres.setEnabled(true);
-            cuatro.setEnabled(true);
-            cinco.setEnabled(true);
-        }
-        System.out.println(rutaPdf);
+        tres.setEnabled(false);
         new CambiaPanel(pnlPrincipal, new paneles.pnlHome());
     }
 
@@ -546,6 +536,8 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_unoMousePressed
 
     private void tresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tresActionPerformed
+        
+               
         new CambiaPanel(pnlPrincipal, new paneles.PNL_Personalizacion());
         if(this.tres.isSelected()){
             this.tres.setColorNormal(new Color(204,204,204));
@@ -584,6 +576,7 @@ public class Principal extends javax.swing.JFrame {
             this.tres.setColorHover(new Color(204,204,204));
             this.tres.setColorPressed(new Color(204,204,204));
         }
+        
     }//GEN-LAST:event_tresActionPerformed
     
     public void fondo_tres(){
@@ -976,7 +969,7 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rsbuttom.RSButtonMetro cinco;
     private rsbuttom.RSButtonMetro cuatro;
-    private rsbuttom.RSButtonMetro dos;
+    public static rsbuttom.RSButtonMetro dos;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -993,7 +986,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel pnlPrincipal;
     private rsbuttom.RSButtonMetro seis;
     private rsbuttom.RSButtonMetro siete;
-    private rsbuttom.RSButtonMetro tres;
+    public static rsbuttom.RSButtonMetro tres;
     private rsbuttom.RSButtonMetro uno;
     // End of variables declaration//GEN-END:variables
 }

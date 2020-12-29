@@ -41,6 +41,7 @@ import org.icepdf.ri.common.ComponentKeyBinding;
 import org.icepdf.ri.common.SwingController;
 import org.icepdf.ri.common.SwingViewBuilder;
 import static paneles.PNL_Importacion.rutaPdf;
+import principal.Principal;
 /**
  *
  * @author RojeruSan
@@ -49,7 +50,7 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
 
     private List<JTextField> lista_nombre_seccion, lista_rango_inferior_seccion, lista_rango_superior_seccion;
     public static String rutaPdf;
-    public String ruta_archivo = "";
+    public String ruta_archivo;
     
     public PNL_Personalizacion() {
         initComponents();        
@@ -83,7 +84,6 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
         btnOption03 = new rsbuttom.RSButtonMetro();
         cbPosicion = new javax.swing.JComboBox<>();
         jPanel10 = new javax.swing.JPanel();
-        btnConfirmar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         txtnum_secciones = new javax.swing.JTextField();
@@ -94,12 +94,12 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
         Panel_nom_seccion = new javax.swing.JPanel();
         Panel_rango_inferior_seccion = new javax.swing.JPanel();
         Panel_rango_superior_seccion = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
-        btn_generar_secciones = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         sc = new javax.swing.JScrollPane();
         btnabrir = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
+        btn_generar_secciones = new javax.swing.JButton();
+        btnConfirmar = new javax.swing.JButton();
         jPanel11 = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -112,7 +112,8 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
 
         jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder("Establecer Icono"));
 
-        jPanel8.setBackground(new java.awt.Color(51, 153, 255));
+        jPanel8.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         btnOption01.setText("1");
 
@@ -155,7 +156,7 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
                     .addComponent(btnOption01, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnOption02, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnOption03, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 205, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 188, Short.MAX_VALUE)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnOption04, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnOption05, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -170,33 +171,22 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
             }
         });
 
-        btnConfirmar.setText("Confirmar");
-        btnConfirmar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConfirmarActionPerformed(evt);
-            }
-        });
-
-        btnCancelar.setText("Cancelar ");
+        btnCancelar.setText("Modificar");
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnConfirmar)
-                .addGap(18, 18, 18)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                .addContainerGap(68, Short.MAX_VALUE)
                 .addComponent(btnCancelar)
-                .addContainerGap())
+                .addGap(63, 63, 63))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCancelar))
+                .addComponent(btnCancelar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -205,7 +195,7 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(13, Short.MAX_VALUE)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
                         .addComponent(cbPosicion, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -222,9 +212,9 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(cbPosicion)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cbPosicion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -239,13 +229,15 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
             }
         });
 
-        Panel_nom_seccion.setLayout(new java.awt.GridLayout(10, 0));
+        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
+
+        Panel_nom_seccion.setLayout(new java.awt.GridLayout(25, 0));
         jPanel6.add(Panel_nom_seccion);
 
-        Panel_rango_inferior_seccion.setLayout(new java.awt.GridLayout(10, 0));
+        Panel_rango_inferior_seccion.setLayout(new java.awt.GridLayout(25, 0));
         jPanel6.add(Panel_rango_inferior_seccion);
 
-        Panel_rango_superior_seccion.setLayout(new java.awt.GridLayout(10, 0));
+        Panel_rango_superior_seccion.setLayout(new java.awt.GridLayout(25, 0));
         jPanel6.add(Panel_rango_superior_seccion);
 
         jScrollPane2.setViewportView(jPanel6);
@@ -263,52 +255,23 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
                 .addContainerGap())
-        );
-
-        btn_generar_secciones.setText("Generar PDF");
-        btn_generar_secciones.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_generar_seccionesActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(btn_generar_secciones)
-                .addContainerGap(31, Short.MAX_VALUE))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btn_generar_secciones)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(20, 20, 20))
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(119, 119, 119)
-                        .addComponent(txtnum_secciones, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
-                        .addComponent(btnSeccion))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(114, 114, 114)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(119, 119, 119)
+                .addComponent(txtnum_secciones, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(btnSeccion)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -320,8 +283,7 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
                     .addComponent(btnSeccion))
                 .addGap(8, 8, 8)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(1, 1, 1)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(52, 52, 52))
         );
 
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Visualizar PDF"));
@@ -344,7 +306,7 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(sc, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -356,15 +318,39 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
 
         jPanel2.setBackground(new java.awt.Color(51, 153, 255));
 
+        btn_generar_secciones.setText("Generar PDF");
+        btn_generar_secciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_generar_seccionesActionPerformed(evt);
+            }
+        });
+
+        btnConfirmar.setText("Guardar Cambios");
+        btnConfirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(146, 146, 146)
+                .addComponent(btnConfirmar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(209, 209, 209)
+                .addComponent(btn_generar_secciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(87, 87, 87))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 66, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_generar_secciones, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(btnConfirmar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jPanel11.setBackground(new java.awt.Color(51, 153, 255));
@@ -377,7 +363,7 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 65, Short.MAX_VALUE)
+            .addGap(0, 67, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -399,18 +385,18 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(46, 46, 46))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(29, 29, 29)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(10, 10, 10)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(46, 46, 46))
         );
 
@@ -552,9 +538,9 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
 
     private void cbPosicionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbPosicionActionPerformed
         // Elegir posición del icono del PDF
-        int opcion=1;
+        int opcion=cbPosicion.getSelectedIndex();
         switch(opcion){
-            case 1:
+            case 0:
                 btnOption01.setEnabled(true);
                 btnOption01.setColorNormal(Color.darkGray);
                 btnOption01.setColorHover(Color.red);
@@ -569,7 +555,7 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
                 btnOption06.setEnabled(false);
                 btnOption06.setColorHover(Color.getColor("0,0,0"));
                 break;
-            case 2:
+            case 1:
                 btnOption02.setEnabled(true);
                 btnOption02.setColorNormal(Color.darkGray);
                 btnOption02.setColorHover(Color.red);
@@ -584,7 +570,7 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
                 btnOption06.setEnabled(false);
                 btnOption06.setColorHover(Color.getColor("0,0,0"));
                 break;
-            case 3:
+            case 2:
                 btnOption03.setEnabled(true);
                 btnOption03.setColorNormal(Color.darkGray);
                 btnOption03.setColorHover(Color.red);
@@ -599,7 +585,7 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
                 btnOption06.setEnabled(false);
                 btnOption06.setColorHover(Color.getColor("0,0,0"));
                 break;
-            case 4:
+            case 3:
                 btnOption04.setEnabled(true);
                 btnOption04.setColorNormal(Color.darkGray);
                 btnOption04.setColorHover(Color.red);
@@ -614,7 +600,7 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
                 btnOption06.setEnabled(false);
                 btnOption06.setColorHover(Color.getColor("0,0,0"));
                 break;
-            case 5:
+            case 4:
                 btnOption05.setEnabled(true);
                 btnOption05.setColorNormal(Color.darkGray);
                 btnOption05.setColorHover(Color.red);
@@ -629,7 +615,7 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
                 btnOption06.setEnabled(false);
                 btnOption06.setColorHover(Color.getColor("0,0,0"));
                 break;
-            case 6:
+            case 5:
                 btnOption06.setEnabled(true);
                 btnOption06.setColorNormal(Color.darkGray);
                 btnOption06.setColorHover(Color.red);
@@ -716,7 +702,6 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;

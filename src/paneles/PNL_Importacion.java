@@ -12,6 +12,8 @@ import org.icepdf.ri.common.ComponentKeyBinding;
 import org.icepdf.ri.common.SwingController;
 import org.icepdf.ri.common.SwingViewBuilder;
 import principal.Principal;
+import static principal.Principal.rutaPdf;
+import static principal.Principal.tres;
 
 public class PNL_Importacion extends javax.swing.JPanel {
 
@@ -87,9 +89,12 @@ public class PNL_Importacion extends javax.swing.JPanel {
                     control.getDocumentViewController()));
                    control.openDocument(url);
             sc.setViewportView(veiwerCompntpnl); 
+            
         } catch (Exception ex) {
+            tres.setEnabled(false);
             JOptionPane.showMessageDialog(this,"Cannot Load Pdf");
         }
+        
     }
     
     private void btnabrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnabrirActionPerformed
@@ -106,7 +111,15 @@ public class PNL_Importacion extends javax.swing.JPanel {
         if (se == 0) {
             ruta_archivo = j.getSelectedFile().getAbsolutePath();
             abrir_pdf(ruta_archivo);
+            if(rutaPdf.compareTo("")!=0){
+                 tres.setEnabled(true);
+             }
+            else{
+                tres.setEnabled(false);
+             }
+               
         } else {
+           tres.setEnabled(false);
             JOptionPane.showMessageDialog(null, "No selecciono");
         }
     }
