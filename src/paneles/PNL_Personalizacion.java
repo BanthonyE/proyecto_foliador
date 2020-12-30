@@ -645,8 +645,8 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
                         
             int cont=1;            
             int cantidad_paginas = final_pagina - inicio_pagina + 1;   
-            
-            for (int j = inicio_pagina; j <= final_pagina; j++) {   
+                               
+            for (int j = inicio_pagina; j <= final_pagina; j++) {                                   
                 try {
                     image = ImageIO.read(new File( "src/Recursos/sellos/sello.jpeg"));              
                     g = image.getGraphics(); 
@@ -658,25 +658,28 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
                     g.drawString(""+cantidad_paginas, 230, 270); 
                     g.dispose(); 
                     cont++;    
-                                        
+
                     tmp_image = image;
                     image2 = new BufferedImage(tmp_image.getWidth(), tmp_image.getHeight(), BufferedImage.TYPE_4BYTE_ABGR);   
                     image2.createGraphics().drawRenderedImage(tmp_image, null); 
-                    
+
                     ximage = new PDPixelMap(document, image2); 
+                    if (pdfpage+1 != j) {
+                        int diferencia = inicio_pagina - pdfpage - 1;
+                        pdfpage = pdfpage + diferencia;
+                    }
                     page = (PDPage)document.getDocumentCatalog().getAllPages().get(pdfpage); 
-                    
+
                     contentStream = new PDPageContentStream(document, page, true, true); 
                     contentStream.drawXObject(ximage, x_sello, y_sello, ximage.getWidth()*0.15f, ximage.getHeight()*0.15f); 
                     contentStream.close(); 
-                    
+
                     pdfpage++;
                 } catch (IOException ex) {
                     Logger.getLogger(PNL_Personalizacion.class.getName()).log(Level.SEVERE, null, ex);
-                } 
-            }
-        }
-            
+                }                
+            }                       
+        }            
     }       
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
