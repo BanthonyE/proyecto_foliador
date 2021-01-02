@@ -648,7 +648,7 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
                                
             for (int j = inicio_pagina; j <= final_pagina; j++) {                                   
                 try {
-                    image = ImageIO.read(new File( "src/Recursos/sellos/sello.jpeg"));              
+                    image = ImageIO.read(getClass().getResource("src/Recursos/sellos/sello.jpeg"));                    
                     g = image.getGraphics(); 
                     Font myFont = new Font ("Courier New", 1, 55);
                     g.setFont(myFont); 
