@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 
 
 
+
 import java.util.Iterator;
 import static javafx.scene.transform.Transform.scale;
 import javax.swing.JFileChooser;
@@ -405,7 +406,7 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
         }
 
         try {
-            document.save("src/Recursos/pdfGenerado/pdf-generado.pdf");
+            document.save("pdf-generado.pdf");
         } catch (IOException ex) {
             Logger.getLogger(PNL_Personalizacion.class.getName()).log(Level.SEVERE, null, ex);
         } catch (COSVisitorException ex) {
@@ -419,7 +420,7 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
             control.getDocumentViewController().setAnnotationCallback(
                 new org.icepdf.ri.common.MyAnnotationCallback(
                 control.getDocumentViewController()));
-                control.openDocument("src/Recursos/pdfGenerado/pdf-generado.pdf");
+                control.openDocument("pdf-generado.pdf");
             sc.setViewportView(veiwerCompntpnl); 
 
         
@@ -648,7 +649,7 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
                                
             for (int j = inicio_pagina; j <= final_pagina; j++) {                                   
                 try {
-                    image = ImageIO.read(getClass().getResource("src/Recursos/sellos/sello.jpeg"));                    
+                    image = ImageIO.read(new File("sello.jpeg")); 
                     g = image.getGraphics(); 
                     Font myFont = new Font ("Courier New", 1, 55);
                     g.setFont(myFont); 
