@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package paneles;
+import javafx.stage.FileChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -11,8 +12,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import org.icepdf.ri.common.ComponentKeyBinding;
 import org.icepdf.ri.common.SwingController;
 import org.icepdf.ri.common.SwingViewBuilder;
-import principal.Principal;
-import static principal.Principal.rutaPdf;
 import static principal.Principal.tres;
 
 public class PNL_Importacion extends javax.swing.JPanel {
@@ -20,8 +19,12 @@ public class PNL_Importacion extends javax.swing.JPanel {
     /**
      * Creates new form Visual
      */
-    public String ruta_archivo = "";
-    public static String rutaPdf = ""; 
+    public static String ruta_archivo = "";
+    
+    public static String nombre_pdf="";
+    public static int pag_pdf;
+    public static String direct="";
+    
     public PNL_Importacion() {
         initComponents();          
     }
@@ -77,8 +80,7 @@ public class PNL_Importacion extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    public void abrir_pdf(String url) {       
-        rutaPdf = url;
+    public void abrir_pdf(String url) { 
         try {
            SwingController control=new SwingController();
             SwingViewBuilder factry=new SwingViewBuilder(control);
@@ -88,6 +90,7 @@ public class PNL_Importacion extends javax.swing.JPanel {
                     new org.icepdf.ri.common.MyAnnotationCallback(
                     control.getDocumentViewController()));
                    control.openDocument(url);
+                   pag_pdf = control.getDocument().getNumberOfPages();                   
             sc.setViewportView(veiwerCompntpnl); 
             
         } catch (Exception ex) {
@@ -106,12 +109,14 @@ public class PNL_Importacion extends javax.swing.JPanel {
         
         JFileChooser j = new JFileChooser(ruta_archivo);
         FileNameExtensionFilter fi = new FileNameExtensionFilter("pdf", "pdf");
-        j.setFileFilter(fi);
+        j.setFileFilter(fi);             
         int se = j.showOpenDialog(this);
         if (se == 0) {
             ruta_archivo = j.getSelectedFile().getAbsolutePath();
+            nombre_pdf = j.getSelectedFile().getName();
+            direct = j.getSelectedFile().getPath();
             abrir_pdf(ruta_archivo);
-            if(rutaPdf.compareTo("")!=0){
+            if(ruta_archivo.compareTo("")!=0){
                  tres.setEnabled(true);
              }
             else{

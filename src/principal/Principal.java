@@ -13,8 +13,6 @@ import java.util.logging.Logger;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import paneles.CambiaPanel;
-import paneles.PNL_Importacion;
-import static paneles.PNL_Personalizacion.rutaPdf;
 
 /**
  *

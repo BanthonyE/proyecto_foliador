@@ -17,32 +17,21 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 
 
-
-
-import java.util.Iterator;
-import static javafx.scene.transform.Transform.scale;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import static javax.swing.Spring.scale;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
 import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDResources;
 import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.graphics.xobject.PDPixelMap;
 import org.apache.pdfbox.pdmodel.graphics.xobject.PDXObjectImage;
 import org.icepdf.ri.common.ComponentKeyBinding;
 import org.icepdf.ri.common.SwingController;
 import org.icepdf.ri.common.SwingViewBuilder;
-import static paneles.PNL_Importacion.rutaPdf;
-import principal.Principal;
 /**
  *
  * @author RojeruSan
@@ -50,9 +39,11 @@ import principal.Principal;
 public class PNL_Personalizacion extends javax.swing.JPanel {
 
     private List<JTextField> lista_nombre_seccion, lista_rango_inferior_seccion, lista_rango_superior_seccion;
-    public static String rutaPdf;
-    public String ruta_archivo;
-
+    public static String ruta_archivo;
+    public static String nombre_pdf;
+    public static String direct_pdf;
+    public static int pag_pdf;
+    
     SwingController control = null;
     SwingViewBuilder factry = null;
     JPanel veiwerCompntpnl = null;      
@@ -64,8 +55,16 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
         lista_nombre_seccion = new ArrayList<>();
         lista_rango_inferior_seccion = new ArrayList<>();
         lista_rango_superior_seccion = new ArrayList<>();
-        rutaPdf = PNL_Importacion.rutaPdf;
-        btn_generar_secciones.setEnabled(false);
+        ruta_archivo = PNL_Importacion.ruta_archivo;
+        
+        nombre_pdf = PNL_Importacion.nombre_pdf;
+        direct_pdf = PNL_Importacion.direct;
+        pag_pdf = PNL_Importacion.pag_pdf;
+        
+        txt_nombre.setText(nombre_pdf);
+        txt_raiz.setText(direct_pdf);
+        txt_pag.setText(""+pag_pdf);
+        btn_generar_pdf.setEnabled(false);
     }
 
       
@@ -102,9 +101,15 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
         jPanel7 = new javax.swing.JPanel();
         sc = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
-        btn_generar_secciones = new javax.swing.JButton();
+        btn_generar_pdf = new javax.swing.JButton();
         btnGuardarCambios = new javax.swing.JButton();
         jPanel11 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        txt_raiz = new javax.swing.JTextField();
+        txt_pag = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        txt_nombre = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -195,6 +200,15 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Establecer secciones"));
 
+        txtnum_secciones.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtnum_seccionesKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtnum_seccionesKeyTyped(evt);
+            }
+        });
+
         btnSeccion.setText("Crear Secciones");
         btnSeccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -279,10 +293,10 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
 
         jPanel2.setBackground(new java.awt.Color(51, 153, 255));
 
-        btn_generar_secciones.setText("Generar PDF");
-        btn_generar_secciones.addActionListener(new java.awt.event.ActionListener() {
+        btn_generar_pdf.setText("Generar PDF");
+        btn_generar_pdf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_generar_seccionesActionPerformed(evt);
+                btn_generar_pdfActionPerformed(evt);
             }
         });
 
@@ -301,7 +315,7 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
                 .addGap(32, 32, 32)
                 .addComponent(btnGuardarCambios, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_generar_secciones, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_generar_pdf, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -309,22 +323,63 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_generar_secciones, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
+                    .addComponent(btn_generar_pdf, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
                     .addComponent(btnGuardarCambios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         jPanel11.setBackground(new java.awt.Color(51, 153, 255));
 
+        jLabel1.setText("Ubicación:");
+
+        jLabel2.setText("Número de páginas: ");
+
+        txt_raiz.setEditable(false);
+        txt_raiz.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_raizActionPerformed(evt);
+            }
+        });
+
+        txt_pag.setEditable(false);
+
+        jLabel3.setText("Nombre:");
+
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel3))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(txt_pag, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_raiz))
+                .addGap(71, 71, 71))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 103, Short.MAX_VALUE)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(txt_raiz, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2))
+                    .addComponent(txt_pag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -336,7 +391,7 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 2, Short.MAX_VALUE)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -388,9 +443,9 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_generar_seccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_generar_seccionesActionPerformed
+    private void btn_generar_pdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_generar_pdfActionPerformed
                   
-        String pdfFilePath = rutaPdf;
+        String pdfFilePath = ruta_archivo;
 
         PDDocument document = null;
         try {
@@ -424,7 +479,7 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
             sc.setViewportView(veiwerCompntpnl); 
 
         
-    }//GEN-LAST:event_btn_generar_seccionesActionPerformed
+    }//GEN-LAST:event_btn_generar_pdfActionPerformed
 
     private void btnSeccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeccionActionPerformed
         int numSecciones = 0;
@@ -435,56 +490,89 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
 
         lista_nombre_seccion.clear();
         lista_rango_inferior_seccion.clear();
-        lista_rango_superior_seccion.clear();
-
+        lista_rango_superior_seccion.clear();        
+        
         numSecciones = Integer.parseInt(txtnum_secciones.getText());
+        
+        if (pag_pdf >= numSecciones) {
+            for (int i = 0; i <= numSecciones; i++) {
+                if(i == 0){
+                    Label lbl_nomb_seccion = new Label("Nombre de la Sección");
+                    Label lbl_rango_inferior_seccion = new Label("De");
+                    Label lbl_rango_superior_seccion = new Label("Hasta");
 
-        for (int i = 0; i <= numSecciones; i++) {
+                    Panel_nom_seccion.add(lbl_nomb_seccion);
+                    Panel_nom_seccion.updateUI();
 
-            if(i == 0){
-                Label lbl_nomb_seccion = new Label("Nombre de la Sección");
-                Label lbl_rango_inferior_seccion = new Label("De");
-                Label lbl_rango_superior_seccion = new Label("Hasta");
+                    Panel_rango_inferior_seccion.add(lbl_rango_inferior_seccion);
+                    Panel_rango_inferior_seccion.updateUI();
 
-                Panel_nom_seccion.add(lbl_nomb_seccion);
-                Panel_nom_seccion.updateUI();
+                    Panel_rango_superior_seccion.add(lbl_rango_superior_seccion);
+                    Panel_rango_superior_seccion.updateUI();
 
-                Panel_rango_inferior_seccion.add(lbl_rango_inferior_seccion);
-                Panel_rango_inferior_seccion.updateUI();
+                }else{
+                    JTextField nombre_seccion = new JTextField("",10);
+                    JTextField rango_inferior_seccion = new JTextField("",5);
+                    JTextField rango_superior_seccion = new JTextField("",5);
 
-                Panel_rango_superior_seccion.add(lbl_rango_superior_seccion);
-                Panel_rango_superior_seccion.updateUI();
+                    Panel_nom_seccion.add(nombre_seccion);
+                    lista_nombre_seccion.add(nombre_seccion);
+                    Panel_nom_seccion.updateUI();
 
-            }else{
-                JTextField nombre_seccion = new JTextField("",10);
-                JTextField rango_inferior_seccion = new JTextField("",5);
-                JTextField rango_superior_seccion = new JTextField("",5);
+                    Panel_rango_inferior_seccion.add(rango_inferior_seccion);
+                    lista_rango_inferior_seccion.add(rango_inferior_seccion);
+                    Panel_rango_inferior_seccion.updateUI();
 
-                Panel_nom_seccion.add(nombre_seccion);
-                lista_nombre_seccion.add(nombre_seccion);
-                Panel_nom_seccion.updateUI();
-
-                Panel_rango_inferior_seccion.add(rango_inferior_seccion);
-                lista_rango_inferior_seccion.add(rango_inferior_seccion);
-                Panel_rango_inferior_seccion.updateUI();
-
-                Panel_rango_superior_seccion.add(rango_superior_seccion);
-                lista_rango_superior_seccion.add(rango_superior_seccion);
-                Panel_rango_superior_seccion.updateUI();
-            }
+                    Panel_rango_superior_seccion.add(rango_superior_seccion);
+                    lista_rango_superior_seccion.add(rango_superior_seccion);
+                    Panel_rango_superior_seccion.updateUI();
+                }
+            }            
+        }else{
+            JOptionPane.showMessageDialog(null, "Error");
         }
-        //
+
     }//GEN-LAST:event_btnSeccionActionPerformed
 
     private void btnGuardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCambiosActionPerformed
         
-        String seccion= txtnum_secciones.getText();
-        if(seccion.compareTo("")!=0){
-            btn_generar_secciones.setEnabled(true);
-            JOptionPane.showMessageDialog(this,"Datos guardados"); 
+        String seccion= txtnum_secciones.getText();   
+        
+        int estado = 0;
+        int cont = 0;
+        for (int i = 0; i < Integer.parseInt(seccion); i++) {
+            
+            String a = lista_rango_inferior_seccion.get(i).getText();
+            String b = lista_rango_superior_seccion.get(i).getText();
+            String c = lista_nombre_seccion.get(i).getText();
+            
+            if(a.compareTo("")==0 || b.compareTo("")==0 || c.compareTo("") == 0) {
+                estado++;
+            }else{
+                int inicio_pagina = Integer.parseInt(a);
+                int final_pagina = Integer.parseInt(b); 
+
+                if (inicio_pagina > final_pagina || inicio_pagina <= 0) {
+                    estado++;
+                }
+                if ((final_pagina > pag_pdf) || (inicio_pagina > pag_pdf)) {
+                    estado++;
+                }
+                if (cont == 1) {                
+                    if ((Integer.parseInt(lista_rango_superior_seccion.get(i-1).getText()) >= inicio_pagina)) {
+                        estado++;
+                    }
+                }        
+            }   
+            cont++; 
         }
-        else{
-           JOptionPane.showMessageDialog(this,"Falta ingresar datos en seccion");
+        
+        if (estado == 0) {
+            btn_generar_pdf.setEnabled(true);
+            JOptionPane.showMessageDialog(this,"Datos guardados"); 
+            
+        }else{
+           JOptionPane.showMessageDialog(this,"Error tipo 2");
         }
         sc.setViewportView(null);
     }//GEN-LAST:event_btnGuardarCambiosActionPerformed
@@ -629,6 +717,26 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
         
     }//GEN-LAST:event_cbPosicionActionPerformed
 
+    private void txtnum_seccionesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnum_seccionesKeyTyped
+        char validar = evt.getKeyChar();        
+        int asciiValue = (int) validar;
+        
+        if (!(asciiValue >= 48 && asciiValue <= 57) && !(asciiValue==8) && !(asciiValue==127)) {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "El dígito registrado:" + validar + "No es permitido./n Ingrese solamente números");   
+        }       
+        
+    }//GEN-LAST:event_txtnum_seccionesKeyTyped
+
+    private void txtnum_seccionesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnum_seccionesKeyPressed
+
+    }//GEN-LAST:event_txtnum_seccionesKeyPressed
+
+    private void txt_raizActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_raizActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_raizActionPerformed
+
     public void addImageToPage(PDDocument document, List<JTextField> lista_nombre_seccion, List<JTextField> lista_rango_inferior_seccion, List<JTextField> lista_rango_superior_seccion) throws IOException { 
         int cantidad_secciones = lista_nombre_seccion.size();
         BufferedImage image = null, tmp_image = null, image2 = null;
@@ -695,8 +803,11 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
     private rsbuttom.RSButtonMetro btnOption05;
     private rsbuttom.RSButtonMetro btnOption06;
     private javax.swing.JButton btnSeccion;
-    private javax.swing.JButton btn_generar_secciones;
+    private javax.swing.JButton btn_generar_pdf;
     private javax.swing.JComboBox<String> cbPosicion;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel11;
@@ -709,6 +820,9 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane sc;
+    private javax.swing.JTextField txt_nombre;
+    private javax.swing.JTextField txt_pag;
+    private javax.swing.JTextField txt_raiz;
     private javax.swing.JTextField txtnum_secciones;
     // End of variables declaration//GEN-END:variables
 }
