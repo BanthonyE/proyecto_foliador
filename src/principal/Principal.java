@@ -32,6 +32,7 @@ public class Principal extends javax.swing.JFrame {
         this.setLocationRelativeTo(this);
         this.uno.setSelected(true);
         tres.setEnabled(false);
+        cuatro.setEnabled(false);
         new CambiaPanel(pnlPrincipal, new paneles.pnlHome());
     }
 
@@ -966,7 +967,7 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rsbuttom.RSButtonMetro cinco;
-    private rsbuttom.RSButtonMetro cuatro;
+    public static rsbuttom.RSButtonMetro cuatro;
     public static rsbuttom.RSButtonMetro dos;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
