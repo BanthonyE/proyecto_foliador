@@ -38,11 +38,12 @@ import org.icepdf.ri.common.SwingViewBuilder;
  */
 public class PNL_Personalizacion extends javax.swing.JPanel {
 
-    private List<JTextField> lista_nombre_seccion, lista_rango_inferior_seccion, lista_rango_superior_seccion;
+    public static List<JTextField> lista_nombre_seccion, lista_rango_inferior_seccion, lista_rango_superior_seccion;
     public static String ruta_archivo;
     public static String nombre_pdf;
     public static String direct_pdf;
     public static int pag_pdf;
+    public static String seccion;
     
     SwingController control = null;
     SwingViewBuilder factry = null;
@@ -536,7 +537,7 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
 
     private void btnGuardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCambiosActionPerformed
         
-        String seccion= txtnum_secciones.getText();   
+        seccion= txtnum_secciones.getText();   
         
         int estado = 0;
         int cont = 0;
@@ -560,6 +561,9 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
                 }
                 if (cont == 1) {                
                     if ((Integer.parseInt(lista_rango_superior_seccion.get(i-1).getText()) >= inicio_pagina)) {
+                        estado++;
+                    }
+                    if ((Integer.parseInt(lista_rango_superior_seccion.get(i-1).getText()) == final_pagina)) {
                         estado++;
                     }
                 }        
@@ -795,7 +799,7 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
     private javax.swing.JPanel Panel_nom_seccion;
     private javax.swing.JPanel Panel_rango_inferior_seccion;
     private javax.swing.JPanel Panel_rango_superior_seccion;
-    private javax.swing.JButton btnGuardarCambios;
+    public static javax.swing.JButton btnGuardarCambios;
     private rsbuttom.RSButtonMetro btnOption01;
     private rsbuttom.RSButtonMetro btnOption02;
     private rsbuttom.RSButtonMetro btnOption03;
@@ -803,7 +807,7 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
     private rsbuttom.RSButtonMetro btnOption05;
     private rsbuttom.RSButtonMetro btnOption06;
     private javax.swing.JButton btnSeccion;
-    private javax.swing.JButton btn_generar_pdf;
+    public static javax.swing.JButton btn_generar_pdf;
     private javax.swing.JComboBox<String> cbPosicion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
