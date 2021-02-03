@@ -20,8 +20,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import static org.apache.poi.hssf.usermodel.HeaderFooter.file;
-import org.apache.poi.sl.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -51,6 +49,7 @@ public class PNL_Visualizacion extends javax.swing.JPanel {
     
     public PNL_Visualizacion() {
         initComponents();
+        btn_ExportarExcel.setEnabled(false);
         seccion=PNL_Personalizacion.seccion;
         lista_nombre_seccion=PNL_Personalizacion.lista_nombre_seccion;
         lista_rango_inferior_seccion=PNL_Personalizacion.lista_rango_inferior_seccion;
@@ -76,7 +75,7 @@ public class PNL_Visualizacion extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel5.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Roboto", 1, 36)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(38, 86, 186));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Reporte de la foliación - secciones");
@@ -94,6 +93,7 @@ public class PNL_Visualizacion extends javax.swing.JPanel {
             }
         });
 
+        tablaSecciones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tablaSecciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -113,25 +113,29 @@ public class PNL_Visualizacion extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tablaSecciones.getTableHeader().setResizingAllowed(false);
+        tablaSecciones.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaSecciones);
+        if (tablaSecciones.getColumnModel().getColumnCount() > 0) {
+            tablaSecciones.getColumnModel().getColumn(1).setResizable(false);
+            tablaSecciones.getColumnModel().getColumn(2).setResizable(false);
+        }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(91, 91, 91)
-                .addComponent(jScrollPane1)
-                .addGap(82, 82, 82))
+                .addGap(95, 95, 95)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE)
+                .addGap(78, 78, 78))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
-                .addGap(21, 21, 21))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
         );
 
+        btn_ExportarExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/xlsx.png"))); // NOI18N
         btn_ExportarExcel.setText("Exportar Excel");
         btn_ExportarExcel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -144,11 +148,11 @@ public class PNL_Visualizacion extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(192, 192, 192)
+                .addGap(168, 168, 168)
                 .addComponent(btn_Mostrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(26, 26, 26)
+                .addGap(55, 55, 55)
                 .addComponent(btn_ExportarExcel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(188, 188, 188))
+                .addGap(158, 158, 158))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,16 +172,16 @@ public class PNL_Visualizacion extends javax.swing.JPanel {
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_Mostrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_ExportarExcel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(28, 28, 28))
+                    .addComponent(btn_Mostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_ExportarExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21))
         );
     }// </editor-fold>//GEN-END:initComponents
    
     
     public void AgregarFiltro(){
-        selecArchivo.setFileFilter(new FileNameExtensionFilter("Excel (*.xls)", "xls"));
-        selecArchivo.setFileFilter(new FileNameExtensionFilter("Excel (*.xlsx)", "xlsx"));
+        selecArchivo.setFileFilter(new FileNameExtensionFilter("Excel (*.xls)",".xls"));
+        selecArchivo.setFileFilter(new FileNameExtensionFilter("Excel (*.xlsx)",".xlsx"));
     }
     
     private void btn_ExportarExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ExportarExcelActionPerformed
@@ -200,12 +204,13 @@ public class PNL_Visualizacion extends javax.swing.JPanel {
    public String exportarExcel(File archivo,JTable tablaD){
        String respuesta="No se realizo con exito la exportación.";
         int numFila=tablaD.getRowCount(), numColumna=tablaD.getColumnCount();
-        if(archivo.getName().endsWith("xls")|| archivo.getName().endsWith("xlsx")){
-            wb = new HSSFWorkbook();
-        }else{
+        if(archivo.getName().endsWith("xls")){
+            wb = new HSSFWorkbook();   
+        }
+        else{
             wb = new XSSFWorkbook();
         }
-        org.apache.poi.ss.usermodel.Sheet hoja = wb.createSheet("Pruebita");
+        org.apache.poi.ss.usermodel.Sheet hoja = wb.createSheet("SECCIONES");
         
         try {
             for (int i = -1; i < numFila; i++) {
@@ -218,6 +223,7 @@ public class PNL_Visualizacion extends javax.swing.JPanel {
                         celda.setCellValue(String.valueOf(tablaD.getValueAt(i, j)));
                     }
                     wb.write(new FileOutputStream(archivo));
+                    wb.close();
                 }
             }
             respuesta="Exportación exitosa.";
@@ -232,6 +238,7 @@ public class PNL_Visualizacion extends javax.swing.JPanel {
     
     private void btn_MostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_MostrarActionPerformed
        mostrarSecciones();
+       btn_ExportarExcel.setEnabled(true);
     }//GEN-LAST:event_btn_MostrarActionPerformed
 
      public void mostrarSecciones(){

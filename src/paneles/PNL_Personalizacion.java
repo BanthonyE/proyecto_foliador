@@ -32,6 +32,7 @@ import org.apache.pdfbox.pdmodel.graphics.xobject.PDXObjectImage;
 import org.icepdf.ri.common.ComponentKeyBinding;
 import org.icepdf.ri.common.SwingController;
 import org.icepdf.ri.common.SwingViewBuilder;
+import static principal.Principal.cuatro;
 /**
  *
  * @author RojeruSan
@@ -49,10 +50,13 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
     SwingViewBuilder factry = null;
     JPanel veiwerCompntpnl = null;      
     
-    public int x_sello = 550, y_sello = 755;
+    public int x_sello = 5, y_sello = 755;
 
     public PNL_Personalizacion() {
         initComponents();        
+        btnOption01.setEnabled(true);
+        btnOption01.setColorNormal(Color.darkGray);
+        btnOption01.setColorHover(Color.red);
         lista_nombre_seccion = new ArrayList<>();
         lista_rango_inferior_seccion = new ArrayList<>();
         lista_rango_superior_seccion = new ArrayList<>();
@@ -477,14 +481,15 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
                 new org.icepdf.ri.common.MyAnnotationCallback(
                 control.getDocumentViewController()));
                 control.openDocument("pdf-generado.pdf");
-            sc.setViewportView(veiwerCompntpnl); 
+            sc.setViewportView(veiwerCompntpnl);
+            cuatro.setEnabled(true);
 
         
     }//GEN-LAST:event_btn_generar_pdfActionPerformed
 
     private void btnSeccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeccionActionPerformed
         int numSecciones = 0;
-
+        
         Panel_nom_seccion.removeAll();
         Panel_rango_superior_seccion.removeAll();
         Panel_rango_inferior_seccion.removeAll();
@@ -494,8 +499,8 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
         lista_rango_superior_seccion.clear();        
         
         numSecciones = Integer.parseInt(txtnum_secciones.getText());
-        
-        if (pag_pdf >= numSecciones) {
+      
+            if (pag_pdf >= numSecciones) {
             for (int i = 0; i <= numSecciones; i++) {
                 if(i == 0){
                     Label lbl_nomb_seccion = new Label("Nombre de la Sección");
@@ -532,7 +537,8 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
         }else{
             JOptionPane.showMessageDialog(null, "Error");
         }
-
+     
+       
     }//GEN-LAST:event_btnSeccionActionPerformed
 
     private void btnGuardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCambiosActionPerformed
@@ -728,11 +734,13 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
         if (!(asciiValue >= 48 && asciiValue <= 57) && !(asciiValue==8) && !(asciiValue==127)) {
             getToolkit().beep();
             evt.consume();
-            JOptionPane.showMessageDialog(this, "El dígito registrado:" + validar + "No es permitido./n Ingrese solamente números");   
-        }       
-        
+            JOptionPane.showMessageDialog(this, "El dígito registrado:" + validar + "No es permitido"+"/n Ingrese solamente números");   
+        }
+ 
     }//GEN-LAST:event_txtnum_seccionesKeyTyped
-
+    
+    
+    
     private void txtnum_seccionesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnum_seccionesKeyPressed
 
     }//GEN-LAST:event_txtnum_seccionesKeyPressed
