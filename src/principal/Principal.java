@@ -33,7 +33,7 @@ public class Principal extends javax.swing.JFrame {
         this.uno.setSelected(true);
         tres.setEnabled(false);
         cuatro.setEnabled(false);
-        new CambiaPanel(pnlPrincipal, new paneles.pnlHome());
+        new CambiaPanel(pnlPrincipal, new paneles.pnlHome()); 
     }
 
     /**
