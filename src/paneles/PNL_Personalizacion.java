@@ -70,6 +70,7 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
         txt_raiz.setText(direct_pdf);
         txt_pag.setText(""+pag_pdf);
         btn_generar_pdf.setEnabled(false);
+        btnGuardarCambios.setEnabled(false);
     }
 
       
@@ -478,7 +479,7 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
         }
         
             control=new SwingController();
-            factry=new SwingViewBuilder(control);
+            factry=new SwingViewBuilder(control, 2, 2);
             veiwerCompntpnl=factry.buildViewerPanel();
             ComponentKeyBinding.install(control, veiwerCompntpnl);
             control.getDocumentViewController().setAnnotationCallback(
@@ -502,49 +503,62 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
         lista_rango_inferior_seccion.clear();
         lista_rango_superior_seccion.clear();        
         
-        numSecciones = Integer.parseInt(txtnum_secciones.getText());
-      
-            if (pag_pdf >= numSecciones) {
-            for (int i = 0; i <= numSecciones; i++) {
-                if(i == 0){
-                    Label lbl_nomb_seccion = new Label("Nombre de la Sección");
-                    Label lbl_rango_inferior_seccion = new Label("De");
-                    Label lbl_rango_superior_seccion = new Label("Hasta");
-
-                    Panel_nom_seccion.add(lbl_nomb_seccion);
-                    Panel_nom_seccion.updateUI();
-
-                    Panel_rango_inferior_seccion.add(lbl_rango_inferior_seccion);
-                    Panel_rango_inferior_seccion.updateUI();
-
-                    Panel_rango_superior_seccion.add(lbl_rango_superior_seccion);
-                    Panel_rango_superior_seccion.updateUI();
-
-                }else{
-                    JTextField nombre_seccion = new JTextField("",10);
-                    JTextField rango_inferior_seccion = new JTextField("",5);
-                    JTextField rango_superior_seccion = new JTextField("",5);
-
-                    Panel_nom_seccion.add(nombre_seccion);
-                    lista_nombre_seccion.add(nombre_seccion);
-                    Panel_nom_seccion.updateUI();
-
-                    Panel_rango_inferior_seccion.add(rango_inferior_seccion);
-                    lista_rango_inferior_seccion.add(rango_inferior_seccion);
-                    Panel_rango_inferior_seccion.updateUI();
-
-                    Panel_rango_superior_seccion.add(rango_superior_seccion);
-                    lista_rango_superior_seccion.add(rango_superior_seccion);
-                    Panel_rango_superior_seccion.updateUI();
-                }
-            }            
+        String getNumSecciones = txtnum_secciones.getText();
+        
+        if (getNumSecciones.length()==0) {
+            JOptionPane.showMessageDialog(null, "Debe ingresar el número de secciones para la paginación");
         }else{
-            JOptionPane.showMessageDialog(null, "Error");
-        }
-     
-       
-    }//GEN-LAST:event_btnSeccionActionPerformed
+            numSecciones = Integer.parseInt(getNumSecciones);
 
+            if (pag_pdf >= numSecciones) {
+                for (int i = 0; i <= numSecciones; i++) {
+                    if(i == 0){
+                        Label lbl_nomb_seccion = new Label("Nombre de la Sección");
+                        Label lbl_rango_inferior_seccion = new Label("De");
+                        Label lbl_rango_superior_seccion = new Label("Hasta");
+
+                        Panel_nom_seccion.add(lbl_nomb_seccion);
+                        Panel_nom_seccion.updateUI();
+
+                        Panel_rango_inferior_seccion.add(lbl_rango_inferior_seccion);
+                        Panel_rango_inferior_seccion.updateUI();
+
+                        Panel_rango_superior_seccion.add(lbl_rango_superior_seccion);
+                        Panel_rango_superior_seccion.updateUI();
+
+                    }else{
+                        JTextField nombre_seccion = new JTextField("",10);
+                        JTextField rango_inferior_seccion = new JTextField("",5);
+                        JTextField rango_superior_seccion = new JTextField("",5);
+
+                        Panel_nom_seccion.add(nombre_seccion);
+                        lista_nombre_seccion.add(nombre_seccion);
+                        Panel_nom_seccion.updateUI();
+
+                        Panel_rango_inferior_seccion.add(rango_inferior_seccion);
+                        lista_rango_inferior_seccion.add(rango_inferior_seccion);
+                        Panel_rango_inferior_seccion.updateUI();
+
+                        Panel_rango_superior_seccion.add(rango_superior_seccion);
+                        lista_rango_superior_seccion.add(rango_superior_seccion);
+                        Panel_rango_superior_seccion.updateUI();
+                    }
+                }
+                btnGuardarCambios.setEnabled(true);
+            }else{
+                JOptionPane.showMessageDialog(null, "Error");
+            }
+        }
+        
+    }//GEN-LAST:event_btnSeccionActionPerformed
+    public static boolean isNumeric(String str) { 
+        try {  
+          Double.parseDouble(str);  
+          return true;
+        } catch(NumberFormatException e){  
+          return false;  
+        }  
+    }
     private void btnGuardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCambiosActionPerformed
         
         seccion= txtnum_secciones.getText();   
@@ -559,24 +573,40 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
             
             if(a.compareTo("")==0 || b.compareTo("")==0 || c.compareTo("") == 0) {
                 estado++;
+                JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios" + "\n Ingrese los datos correctamente");
+            }else if(!isNumeric(a) || !isNumeric(b)){
+                estado++;
+                JOptionPane.showMessageDialog(null, "Los campos de paginación 'De' y 'Hasta' sólo aceptan números" + "\n Ingrese los datos nuevamente");
             }else{
                 int inicio_pagina = Integer.parseInt(a);
                 int final_pagina = Integer.parseInt(b); 
 
-                if (inicio_pagina > final_pagina || inicio_pagina <= 0) {
+                if (inicio_pagina > final_pagina) {
                     estado++;
+                    JOptionPane.showMessageDialog(null, "El campo 'De' no puede ser mayor al campo 'Hasta'." + "\n Ingrese los datos correctamente");
                 }
                 if ((final_pagina > pag_pdf) || (inicio_pagina > pag_pdf)) {
                     estado++;
+                    JOptionPane.showMessageDialog(null, "Los campos 'De' y 'Hasta' no pueden exceder a la cantidad de páginas del documento." + "\n Ingrese los datos correctamente");
+                }
+                if (inicio_pagina <= 0) {
+                    estado++;
+                    JOptionPane.showMessageDialog(null, "El inicio de la paginación no puede ser negativo." + "\n Ingrese los datos correctamente");
                 }
                 if (cont == 1) {                
                     if ((Integer.parseInt(lista_rango_superior_seccion.get(i-1).getText()) >= inicio_pagina)) {
                         estado++;
+                        JOptionPane.showMessageDialog(null, "El número de pagina inicial de una sección no puede ser inferior a la página de la sección anterior" + "\n Ingrese los datos correctamente");
                     }
                     if ((Integer.parseInt(lista_rango_superior_seccion.get(i-1).getText()) == final_pagina)) {
                         estado++;
+                        JOptionPane.showMessageDialog(null, "El número de pagina inicial de una sección no puede ser igual a la página de la sección anterior" + "\n Ingrese los datos correctamente");
                     }
-                }        
+                    if (lista_nombre_seccion.get(i).getText().compareTo(lista_nombre_seccion.get(i-1).getText()) == 0) {
+                        estado++;
+                        JOptionPane.showMessageDialog(null, "Los nombres de las secciones no pueden repetirse" + "\n Ingrese los datos correctamente");
+                    }
+                }
             }   
             cont++; 
         }

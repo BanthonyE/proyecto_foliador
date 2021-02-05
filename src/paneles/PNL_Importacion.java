@@ -8,6 +8,7 @@ import javafx.stage.FileChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.icepdf.ri.common.ComponentKeyBinding;
 import org.icepdf.ri.common.SwingController;
@@ -83,16 +84,15 @@ public class PNL_Importacion extends javax.swing.JPanel {
     public void abrir_pdf(String url) { 
         try {
            SwingController control=new SwingController();
-            SwingViewBuilder factry=new SwingViewBuilder(control);
+            SwingViewBuilder factry=new SwingViewBuilder(control, 2, 1);
             JPanel veiwerCompntpnl=factry.buildViewerPanel();
             ComponentKeyBinding.install(control, veiwerCompntpnl);
             control.getDocumentViewController().setAnnotationCallback(
-                    new org.icepdf.ri.common.MyAnnotationCallback(
-                    control.getDocumentViewController()));
-                   control.openDocument(url);
-                   pag_pdf = control.getDocument().getNumberOfPages();                   
-            sc.setViewportView(veiwerCompntpnl); 
-            
+                new org.icepdf.ri.common.MyAnnotationCallback(
+                control.getDocumentViewController()));
+                control.openDocument(url);
+                pag_pdf = control.getDocument().getNumberOfPages();                   
+            sc.setViewportView(veiwerCompntpnl);
         } catch (Exception ex) {
             tres.setEnabled(false);
             JOptionPane.showMessageDialog(this,"Cannot Load Pdf");
