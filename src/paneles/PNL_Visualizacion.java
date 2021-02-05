@@ -93,7 +93,7 @@ public class PNL_Visualizacion extends javax.swing.JPanel {
             }
         });
 
-        tablaSecciones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tablaSecciones.setFont(new java.awt.Font("Thonburi", 1, 18)); // NOI18N
         tablaSecciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -113,6 +113,8 @@ public class PNL_Visualizacion extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tablaSecciones.setCellSelectionEnabled(true);
+        tablaSecciones.setRowHeight(25);
         tablaSecciones.getTableHeader().setResizingAllowed(false);
         tablaSecciones.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaSecciones);

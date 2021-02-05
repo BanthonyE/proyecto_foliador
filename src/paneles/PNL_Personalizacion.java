@@ -765,10 +765,10 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
         char validar = evt.getKeyChar();        
         int asciiValue = (int) validar;
         
-        if (!(asciiValue >= 48 && asciiValue <= 57) && !(asciiValue==8) && !(asciiValue==127)) {
+        if (!(asciiValue >= 48 && asciiValue <= 57) && !(asciiValue==8) && !(asciiValue==13) && !(asciiValue==127)) {
             getToolkit().beep();
             evt.consume();
-            JOptionPane.showMessageDialog(this, "El dígito registrado:" + validar + "No es permitido"+"/n Ingrese solamente números");   
+            JOptionPane.showMessageDialog(this, "El dígito registrado:" + validar + "No es permitido"+"\n Ingrese solamente números");   
         }
  
     }//GEN-LAST:event_txtnum_seccionesKeyTyped
