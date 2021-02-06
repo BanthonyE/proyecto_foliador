@@ -18,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 
@@ -546,7 +547,7 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
                 }
                 btnGuardarCambios.setEnabled(true);
             }else{
-                JOptionPane.showMessageDialog(null, "Error");
+                JOptionPane.showMessageDialog(null,"El Número de secciones ingresado supera a las páginas del documento.");
             }
         }
         
@@ -561,64 +562,76 @@ public class PNL_Personalizacion extends javax.swing.JPanel {
     }
     private void btnGuardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCambiosActionPerformed
         
-        seccion= txtnum_secciones.getText();   
-        
-        int estado = 0;
-        int cont = 0;
-        for (int i = 0; i < Integer.parseInt(seccion); i++) {
-            
-            String a = lista_rango_inferior_seccion.get(i).getText();
-            String b = lista_rango_superior_seccion.get(i).getText();
-            String c = lista_nombre_seccion.get(i).getText();
-            
-            if(a.compareTo("")==0 || b.compareTo("")==0 || c.compareTo("") == 0) {
-                estado++;
-                JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios" + "\n Ingrese los datos correctamente");
-            }else if(!isNumeric(a) || !isNumeric(b)){
-                estado++;
-                JOptionPane.showMessageDialog(null, "Los campos de paginación 'De' y 'Hasta' sólo aceptan números" + "\n Ingrese los datos nuevamente");
-            }else{
-                int inicio_pagina = Integer.parseInt(a);
-                int final_pagina = Integer.parseInt(b); 
+          
+         if (txtnum_secciones.getText().length()==0) {             
+             JOptionPane.showMessageDialog(null, "Debe ingresar el número de secciones para la paginación");
+             btnGuardarCambios.setEnabled(false);
+             Panel_nom_seccion.removeAll();         
+             Panel_rango_superior_seccion.removeAll();         
+             Panel_rango_inferior_seccion.removeAll();          
+             lista_nombre_seccion.clear();         
+             lista_rango_inferior_seccion.clear();         
+             lista_rango_superior_seccion.clear();  
+         }
+         else{
+         seccion= txtnum_secciones.getText(); 
+                int estado = 0;
+                int cont = 0;
+                String d= txtnum_secciones.getText();
+                for (int i = 0; i < Integer.parseInt(seccion); i++) {
 
-                if (inicio_pagina > final_pagina) {
-                    estado++;
-                    JOptionPane.showMessageDialog(null, "El campo 'De' no puede ser mayor al campo 'Hasta'." + "\n Ingrese los datos correctamente");
-                }
-                if ((final_pagina > pag_pdf) || (inicio_pagina > pag_pdf)) {
-                    estado++;
-                    JOptionPane.showMessageDialog(null, "Los campos 'De' y 'Hasta' no pueden exceder a la cantidad de páginas del documento." + "\n Ingrese los datos correctamente");
-                }
-                if (inicio_pagina <= 0) {
-                    estado++;
-                    JOptionPane.showMessageDialog(null, "El inicio de la paginación no puede ser negativo." + "\n Ingrese los datos correctamente");
-                }
-                if (cont == 1) {                
-                    if ((Integer.parseInt(lista_rango_superior_seccion.get(i-1).getText()) >= inicio_pagina)) {
+                    String a = lista_rango_inferior_seccion.get(i).getText();
+                    String b = lista_rango_superior_seccion.get(i).getText();
+                    String c = lista_nombre_seccion.get(i).getText();
+
+
+                    if(a.compareTo("")==0 || b.compareTo("")==0 || c.compareTo("") == 0 ) {
                         estado++;
-                        JOptionPane.showMessageDialog(null, "El número de pagina inicial de una sección no puede ser inferior a la página de la sección anterior" + "\n Ingrese los datos correctamente");
-                    }
-                    if ((Integer.parseInt(lista_rango_superior_seccion.get(i-1).getText()) == final_pagina)) {
+                        JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios" + "\n Ingrese los datos correctamente");
+
+                    }else if(!isNumeric(a) || !isNumeric(b)){
                         estado++;
-                        JOptionPane.showMessageDialog(null, "El número de pagina inicial de una sección no puede ser igual a la página de la sección anterior" + "\n Ingrese los datos correctamente");
-                    }
-                    if (lista_nombre_seccion.get(i).getText().compareTo(lista_nombre_seccion.get(i-1).getText()) == 0) {
-                        estado++;
-                        JOptionPane.showMessageDialog(null, "Los nombres de las secciones no pueden repetirse" + "\n Ingrese los datos correctamente");
-                    }
+                        JOptionPane.showMessageDialog(null, "Los campos de paginación 'De' y 'Hasta' sólo aceptan números" + "\n Ingrese los datos nuevamente");
+                    }else{
+                        int inicio_pagina = Integer.parseInt(a);
+                        int final_pagina = Integer.parseInt(b); 
+
+                        if (inicio_pagina > final_pagina) {
+                            estado++;
+                            JOptionPane.showMessageDialog(null, "El campo 'De' no puede ser mayor al campo 'Hasta'." + "\n Ingrese los datos correctamente");
+                        }
+                        if ((final_pagina > pag_pdf) || (inicio_pagina > pag_pdf)) {
+                            estado++;
+                            JOptionPane.showMessageDialog(null, "Los campos 'De' y 'Hasta' no pueden exceder a la cantidad de páginas del documento." + "\n Ingrese los datos correctamente");
+                        }
+                        if (inicio_pagina <= 0) {
+                            estado++;
+                            JOptionPane.showMessageDialog(null, "El inicio de la paginación no puede ser negativo." + "\n Ingrese los datos correctamente");
+                        }
+                        if (cont == 1) {                
+                            if ((Integer.parseInt(lista_rango_superior_seccion.get(i-1).getText()) >= inicio_pagina)) {
+                                estado++;
+                                JOptionPane.showMessageDialog(null, "El número de pagina inicial de una sección no puede ser inferior a la página de la sección anterior" + "\n Ingrese los datos correctamente");
+                            }
+                            if ((Integer.parseInt(lista_rango_superior_seccion.get(i-1).getText()) == final_pagina)) {
+                                estado++;
+                                JOptionPane.showMessageDialog(null, "El número de pagina inicial de una sección no puede ser igual a la página de la sección anterior" + "\n Ingrese los datos correctamente");
+                            }
+                            if (lista_nombre_seccion.get(i).getText().compareTo(lista_nombre_seccion.get(i-1).getText()) == 0) {
+                                estado++;
+                                JOptionPane.showMessageDialog(null, "Los nombres de las secciones no pueden repetirse" + "\n Ingrese los datos correctamente");
+                            }
+                        }
+                    }   
+                    cont++; 
                 }
-            }   
-            cont++; 
-        }
-        
-        if (estado == 0) {
-            btn_generar_pdf.setEnabled(true);
-            JOptionPane.showMessageDialog(this,"Datos guardados"); 
-            
-        }else{
-           JOptionPane.showMessageDialog(this,"Error tipo 2");
-        }
-        sc.setViewportView(null);
+            if (estado == 0) {
+                btn_generar_pdf.setEnabled(true);
+                JOptionPane.showMessageDialog(this,"Datos guardados");  
+            }
+         
+            sc.setViewportView(null);
+         }
     }//GEN-LAST:event_btnGuardarCambiosActionPerformed
 
     private void cbPosicionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbPosicionActionPerformed
