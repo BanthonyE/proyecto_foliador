@@ -54,6 +54,7 @@ public class PNL_Visualizacion extends javax.swing.JPanel {
         lista_nombre_seccion=PNL_Personalizacion.lista_nombre_seccion;
         lista_rango_inferior_seccion=PNL_Personalizacion.lista_rango_inferior_seccion;
         lista_rango_superior_seccion=PNL_Personalizacion.lista_rango_superior_seccion;
+
     }
 
     /**
@@ -113,10 +114,8 @@ public class PNL_Visualizacion extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        tablaSecciones.setCellSelectionEnabled(true);
+        tablaSecciones.setGridColor(new java.awt.Color(204, 204, 255));
         tablaSecciones.setRowHeight(25);
-        tablaSecciones.getTableHeader().setResizingAllowed(false);
-        tablaSecciones.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaSecciones);
         if (tablaSecciones.getColumnModel().getColumnCount() > 0) {
             tablaSecciones.getColumnModel().getColumn(1).setResizable(false);
@@ -225,7 +224,6 @@ public class PNL_Visualizacion extends javax.swing.JPanel {
                         celda.setCellValue(String.valueOf(tablaD.getValueAt(i, j)));
                     }
                     wb.write(new FileOutputStream(archivo));
-                    wb.close();
                 }
             }
             respuesta="Exportación exitosa.";
